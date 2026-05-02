@@ -8,7 +8,7 @@ from datetime import date
 
 # ── Page config ──────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="DPS School Management",
+    page_title="HPS School Management",
     page_icon="🏫",
     layout="wide",
     initial_sidebar_state="collapsed",
@@ -216,10 +216,10 @@ tbody tr:hover td { background: rgba(79,142,247,.05) !important; }
 # ══════════════════════════════════════════════════════════════════════════════
 USERS = {
     # userid : (password, role, display_name, id)
-    "ab@dpsrkp.org":      ("abc123",  "admin",   "Admin AB",     "A112"),
-    "mridul@dpsrkp.org":  ("nani",    "student", "Mridul Sharma","S7172"),
-    "abc@dpsrkp.org":     ("rock",    "student", "ABC",          "S7173"),
-    "lp@dpsrkp.org":      ("physics", "teacher", "Lipi",         "T819"),
+    "ab@hpsnoida.edu": ("abc123", "admin", "Admin AB", "A112"),
+    "mridul@hpsnoida.edu": ("nani", "student", "Mridul Sharma","S7172"),
+    "abc@hpsnoida.edu": ("rock", "student", "ABC", "S7173"),
+    "lp@hpsnoida.edu": ("physics", "teacher", "Lipi", "T819"),
 }
 
 STUDENTS = pd.DataFrame([
@@ -342,7 +342,7 @@ def page_login():
     st.markdown("""<div class="hero">
       <div class="badge">CBSE CLASS XII · 2023-24</div>
       <h1>🏫 Online School Management</h1>
-      <p>Delhi Public School, Sector-12, R.K. Puram, New Delhi</p>
+      <p>Horizon Public School, Sector-21, Noida</p>
     </div>""", unsafe_allow_html=True)
 
     sec_header("SELECT PORTAL")
@@ -390,9 +390,9 @@ def page_login():
             st.markdown("""<div style="background:rgba(79,142,247,.07);border:1px solid rgba(79,142,247,.2);
               border-radius:10px;padding:.9rem 1rem;margin-top:1rem;font-size:.78rem;color:#8896b0">
               <b style="color:#4f8ef7">Demo credentials</b><br>
-              🛡️ Admin &nbsp;&nbsp;&nbsp; ab@dpsrkp.org / abc123<br>
-              👩‍🏫 Teacher &nbsp; lp@dpsrkp.org / physics<br>
-              🎓 Student &nbsp; mridul@dpsrkp.org / nani
+              🛡️ Admin &nbsp;&nbsp;&nbsp; ab@hpsnoida.edu / abc123<br>
+              👩‍🏫 Teacher &nbsp; lp@hpsnoida.edu / physics<br>
+              🎓 Student &nbsp; mridul@hpsnoida.edu / nani
             </div>""", unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════════════════════
