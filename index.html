@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Online School Management System — Mridul Sharma</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0b0f1a;--surface:#131929;--card:#1a2236;--border:#252f45;--accent:#4f8ef7;--green:#3ecf8e;--amber:#f5a623;--red:#ff5b5b;--text:#e8edf5;--muted:#8896b0;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:var(--surface);}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+nav{position:sticky;top:0;z-index:100;background:rgba(11,15,26,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:.9rem 3rem;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-weight:800;font-size:1rem;color:var(--accent);}
+.nav-links{display:flex;gap:2rem;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.85rem;transition:color .2s;}
+.nav-links a:hover{color:var(--text);}
+.nav-badge{font-family:'JetBrains Mono',monospace;font-size:.7rem;background:rgba(79,142,247,.1);border:1px solid rgba(79,142,247,.25);color:var(--accent);padding:.2rem .6rem;border-radius:20px;}
+
+.hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;padding:4rem 3rem;max-width:1300px;margin:0 auto;position:relative;}
+.dot-live{width:8px;height:8px;background:var(--green);border-radius:50%;display:inline-block;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(62,207,142,.4)}50%{box-shadow:0 0 0 8px rgba(62,207,142,0)}}
+.hero-eyebrow{display:flex;align-items:center;gap:.8rem;margin-bottom:1.5rem;}
+.hero-eyebrow span{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;}
+.hero h1{font-size:clamp(2.4rem,5vw,4rem);font-weight:800;line-height:1.1;margin-bottom:1.2rem;}
+.grad{background:linear-gradient(90deg,var(--accent),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-desc{font-size:1.05rem;color:var(--muted);max-width:600px;margin-bottom:2.5rem;line-height:1.8;}
+.ctas{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.6rem;border-radius:10px;font-family:'Sora',sans-serif;font-weight:600;font-size:.88rem;cursor:pointer;text-decoration:none;transition:all .2s;border:none;}
+.btn-p{background:var(--accent);color:#fff;}
+.btn-p:hover{background:#6ba3ff;transform:translateY(-2px);box-shadow:0 8px 24px rgba(79,142,247,.35);}
+.btn-o{background:transparent;color:var(--text);border:1px solid var(--border);}
+.btn-o:hover{border-color:var(--accent);color:var(--accent);}
+.stats{display:flex;gap:3rem;margin-top:4rem;padding-top:2rem;border-top:1px solid var(--border);}
+.stat .num{font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:700;color:var(--accent);}
+.stat .lbl{color:var(--muted);font-size:.8rem;margin-top:.2rem;}
+
+section{padding:5rem 3rem;max-width:1300px;margin:0 auto;}
+.sec-label{display:flex;align-items:center;gap:.8rem;margin-bottom:2.5rem;}
+.sec-label .ln{flex:1;height:1px;background:var(--border);}
+.sec-label span{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;}
+.sec-title{font-size:2rem;font-weight:800;margin-bottom:.6rem;}
+.sec-sub{color:var(--muted);font-size:.95rem;margin-bottom:2.5rem;}
+
+.stack{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:2.5rem;}
+.sp{display:inline-flex;align-items:center;gap:.4rem;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:.35rem .9rem;font-size:.8rem;font-family:'JetBrains Mono',monospace;}
+.sp .d{width:7px;height:7px;border-radius:50%;}
+
+.flow{display:flex;align-items:center;gap:0;overflow-x:auto;padding:1.5rem 0;}
+.fs{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.2rem 1.4rem;min-width:150px;text-align:center;flex-shrink:0;}
+.fs .sn{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);margin-bottom:.4rem;}
+.fs .si{font-size:1.5rem;margin-bottom:.4rem;}
+.fs .sl{font-size:.8rem;font-weight:600;}
+.fa{color:var(--border);font-size:1.2rem;padding:0 .5rem;flex-shrink:0;}
+
+.code-block{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:1.5rem;}
+.cb-head{display:flex;align-items:center;gap:.5rem;padding:.7rem 1rem;border-bottom:1px solid var(--border);}
+.cd{width:10px;height:10px;border-radius:50%;}
+.ct{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);margin-left:.3rem;}
+.cb-body{padding:1.2rem;font-family:'JetBrains Mono',monospace;font-size:.78rem;line-height:1.9;overflow-x:auto;white-space:pre;}
+.kw{color:#c792ea;}.fn{color:#82aaff;}.str{color:#c3e88d;}.cm{color:#546e7a;}.vr{color:#f07178;}.cl{color:#ffcb6b;}
+
+.portal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+.pc{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;position:relative;overflow:hidden;transition:all .25s;}
+.pc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--cl,var(--accent));}
+.pc:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.3);}
+.pc .icon{font-size:2.2rem;margin-bottom:1rem;}
+.pc h3{font-size:1.05rem;font-weight:700;margin-bottom:.8rem;}
+.pc ul{list-style:none;display:flex;flex-direction:column;gap:.45rem;}
+.pc ul li{font-size:.82rem;color:var(--muted);display:flex;align-items:flex-start;gap:.5rem;}
+.pc ul li::before{content:'→';color:var(--cl,var(--accent));font-size:.7rem;margin-top:.2rem;flex-shrink:0;}
+.rb{position:absolute;top:1.1rem;right:1.1rem;font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:.2rem .55rem;border-radius:10px;font-weight:600;}
+
+.feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;}
+.fcard{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.6rem;display:flex;gap:1.2rem;align-items:flex-start;transition:border-color .2s;}
+.fcard:hover{border-color:var(--accent);}
+.fcard .fi{font-size:1.8rem;flex-shrink:0;}
+.fcard h4{font-size:.95rem;font-weight:700;margin-bottom:.4rem;}
+.fcard p{font-size:.82rem;color:var(--muted);line-height:1.7;}
+
+.schema-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+.tcard{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.thead{background:var(--surface);padding:.8rem 1.2rem;display:flex;align-items:center;gap:.6rem;border-bottom:1px solid var(--border);}
+.tn{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;color:var(--accent);}
+.tfields{padding:.6rem 0;}
+.fr{display:flex;align-items:center;justify-content:space-between;padding:.4rem 1.2rem;font-size:.78rem;}
+.fr:hover{background:rgba(79,142,247,.04);}
+.fn2{font-family:'JetBrains Mono',monospace;color:var(--text);}
+.ftype{font-family:'JetBrains Mono',monospace;color:var(--muted);font-size:.72rem;}
+.pk{background:rgba(245,166,35,.12);color:var(--amber);border:1px solid rgba(245,166,35,.3);font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:.1rem .4rem;border-radius:4px;margin-left:.4rem;}
+.fk{background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.3);font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:.1rem .4rem;border-radius:4px;margin-left:.4rem;}
+
+.tech-row{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;}
+.ti{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.4rem;}
+.ti h4{font-size:.88rem;font-weight:700;margin-bottom:.8rem;}
+.ti p{font-size:.82rem;color:var(--muted);line-height:1.7;}
+.tag{display:inline-block;background:var(--surface);border:1px solid var(--border);border-radius:5px;font-family:'JetBrains Mono',monospace;font-size:.7rem;padding:.15rem .45rem;margin:.2rem .15rem;color:var(--muted);}
+
+.creds-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.cc{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.4rem;}
+.cc .role{font-size:.7rem;font-family:'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem;}
+.cc .icon{font-size:1.5rem;margin-bottom:.6rem;}
+.crow{display:flex;justify-content:space-between;align-items:center;padding:.45rem 0;border-bottom:1px solid var(--border);}
+.crow:last-child{border-bottom:none;}
+.crow .k{font-size:.75rem;color:var(--muted);}
+.crow .v{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--text);}
+
+.lim-list{display:flex;flex-direction:column;gap:.7rem;}
+.lim{display:flex;align-items:flex-start;gap:.9rem;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;}
+.lim .lb{flex-shrink:0;font-size:.7rem;font-family:'JetBrains Mono',monospace;padding:.2rem .6rem;border-radius:6px;background:rgba(255,91,91,.1);color:var(--red);border:1px solid rgba(255,91,91,.25);margin-top:.15rem;}
+.lim p{font-size:.85rem;color:var(--muted);}
+
+footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:.82rem;}
+.fl{display:flex;gap:1.5rem;}
+.fl a{color:var(--muted);text-decoration:none;transition:color .2s;}
+.fl a:hover{color:var(--accent);}
+
+@media(max-width:900px){
+  nav{padding:.9rem 1.5rem;}.nav-links{display:none;}
+  .hero,.hero section{padding:3rem 1.5rem;}
+  section{padding:3rem 1.5rem;}
+  .portal-grid,.feat-grid,.schema-grid,.creds-grid,.tech-row{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">🏫 SMS</div>
+  <div class="nav-links">
+    <a href="#overview">Overview</a>
+    <a href="#portals">Portals</a>
+    <a href="#features">Features</a>
+    <a href="#database">Database</a>
+    <a href="#tech">Stack</a>
+  </div>
+  <span class="nav-badge">Python · MySQL · Streamlit</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow"><div class="dot-live"></div><span>Class XII Final Project · DPS R.K. Puram · 2023-24</span></div>
+  <h1>Online School<br><span class="grad">Management System</span></h1>
+  <p class="hero-desc">A role-based school management web application built with Python, MySQL &amp; Streamlit — featuring Admin, Teacher and Student portals with real-time data operations, report cards, progress analytics, fee tracking and salary management.</p>
+  <div class="ctas">
+    <a href="https://github.com/MridulSharma02/Online-School-Management-System" target="_blank" class="btn btn-p">⭐ View on GitHub</a>
+    <a href="#portals" class="btn btn-o">Explore Features →</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="num">3</div><div class="lbl">Role-Based Portals</div></div>
+    <div class="stat"><div class="num">6</div><div class="lbl">Database Tables</div></div>
+    <div class="stat"><div class="num">15+</div><div class="lbl">Core Features</div></div>
+    <div class="stat"><div class="num">944</div><div class="lbl">Lines of Code</div></div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="sec-label"><div class="ln"></div><span>Overview</span><div class="ln"></div></div>
+  <h2 class="sec-title">What this project does</h2>
+  <p class="sec-sub">Originally built as a Python CLI + MySQL project. A Streamlit frontend was added on top — the Python and SQL logic is the core of the work.</p>
+
+  <div class="stack">
+    <span class="sp"><span class="d" style="background:#3776ab"></span>Python 3.6+</span>
+    <span class="sp"><span class="d" style="background:#4479a1"></span>MySQL</span>
+    <span class="sp"><span class="d" style="background:#ff4b4b"></span>Streamlit</span>
+    <span class="sp"><span class="d" style="background:#e70488"></span>Pandas</span>
+    <span class="sp"><span class="d" style="background:#11557c"></span>Matplotlib</span>
+    <span class="sp"><span class="d" style="background:#777"></span>mysql-connector-python</span>
+    <span class="sp"><span class="d" style="background:#f5a623"></span>NumPy</span>
+  </div>
+
+  <div class="flow">
+    <div class="fs"><div class="sn">01</div><div class="si">🔐</div><div class="sl">Login</div></div>
+    <div class="fa">→</div>
+    <div class="fs"><div class="sn">02</div><div class="si">🔀</div><div class="sl">Role Check</div></div>
+    <div class="fa">→</div>
+    <div class="fs"><div class="sn">03</div><div class="si">🗃️</div><div class="sl">MySQL Query</div></div>
+    <div class="fa">→</div>
+    <div class="fs"><div class="sn">04</div><div class="si">🐼</div><div class="sl">Pandas DF</div></div>
+    <div class="fa">→</div>
+    <div class="fs"><div class="sn">05</div><div class="si">📊</div><div class="sl">Charts</div></div>
+    <div class="fa">→</div>
+    <div class="fs"><div class="sn">06</div><div class="si">🖥️</div><div class="sl">Streamlit UI</div></div>
+  </div>
+
+  <div class="code-block">
+    <div class="cb-head">
+      <div class="cd" style="background:#ff5b5b"></div>
+      <div class="cd" style="background:#f5a623"></div>
+      <div class="cd" style="background:#3ecf8e"></div>
+      <span class="ct">app.py — login + role routing (original Python logic)</span>
+    </div>
+    <div class="cb-body"><span class="kw">import</span> <span class="cl">streamlit</span> <span class="kw">as</span> st
+<span class="kw">import</span> <span class="cl">mysql.connector</span>
+
+<span class="cm"># Connect to MySQL database</span>
+<span class="vr">conn</span> = <span class="cl">mysql.connector</span>.<span class="fn">connect</span>(
+    host=<span class="str">"localhost"</span>, user=<span class="str">"root"</span>,
+    password=<span class="str">"****"</span>, database=<span class="str">"school_db"</span>
+)
+
+<span class="kw">def</span> <span class="fn">authenticate</span>(<span class="vr">user_id</span>, <span class="vr">password</span>):
+    <span class="vr">cursor</span> = <span class="vr">conn</span>.<span class="fn">cursor</span>()
+    <span class="vr">cursor</span>.<span class="fn">execute</span>(
+        <span class="str">"SELECT role, display_name FROM users WHERE uid=%s AND pwd=%s"</span>,
+        (<span class="vr">user_id</span>, <span class="vr">password</span>)
+    )
+    <span class="kw">return</span> <span class="vr">cursor</span>.<span class="fn">fetchone</span>()
+
+<span class="cm"># Role-based routing</span>
+<span class="kw">if</span> <span class="vr">role</span> == <span class="str">"admin"</span>:    <span class="fn">page_admin</span>()
+<span class="kw">elif</span> <span class="vr">role</span> == <span class="str">"teacher"</span>: <span class="fn">page_teacher</span>()
+<span class="kw">elif</span> <span class="vr">role</span> == <span class="str">"student"</span>: <span class="fn">page_student</span>()</div>
+  </div>
+</section>
+
+<!-- PORTALS -->
+<section id="portals">
+  <div class="sec-label"><div class="ln"></div><span>Role-Based Portals</span><div class="ln"></div></div>
+  <h2 class="sec-title">Three dedicated portals</h2>
+  <p class="sec-sub">Each user type sees only what they are authorised for — enforced at login via a MySQL query on the users table.</p>
+  <div class="portal-grid">
+    <div class="pc" style="--cl:#f5a623">
+      <div class="rb" style="background:rgba(245,166,35,.12);color:#f5a623;border:1px solid rgba(245,166,35,.3)">ADMIN</div>
+      <div class="icon">🛡️</div><h3>Administration</h3>
+      <ul>
+        <li>Add / Update / Delete students</li>
+        <li>Add / Update / Delete teachers</li>
+        <li>Manage fee collection records</li>
+        <li>Manage teacher salary records</li>
+        <li>Search any student or teacher</li>
+        <li>View all database tables</li>
+      </ul>
+    </div>
+    <div class="pc" style="--cl:#3ecf8e">
+      <div class="rb" style="background:rgba(62,207,142,.12);color:#3ecf8e;border:1px solid rgba(62,207,142,.3)">TEACHER</div>
+      <div class="icon">👩‍🏫</div><h3>Teacher Portal</h3>
+      <ul>
+        <li>Upload / update student marks</li>
+        <li>Add &amp; delete assignments</li>
+        <li>Mark assignment submission status</li>
+        <li>View own net salary breakdown</li>
+        <li>View all students' report cards</li>
+        <li>Update account password</li>
+      </ul>
+    </div>
+    <div class="pc" style="--cl:#4f8ef7">
+      <div class="rb" style="background:rgba(79,142,247,.12);color:#4f8ef7;border:1px solid rgba(79,142,247,.3)">STUDENT</div>
+      <div class="icon">🎓</div><h3>Student Portal</h3>
+      <ul>
+        <li>View report card (4 exams)</li>
+        <li>Progress bar charts via Matplotlib</li>
+        <li>View assignment list &amp; status</li>
+        <li>Check fee payment per quarter</li>
+        <li>Pay pending fee quarters</li>
+        <li>Update account password</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="sec-label"><div class="ln"></div><span>Core Features</span><div class="ln"></div></div>
+  <h2 class="sec-title">What's under the hood</h2>
+  <p class="sec-sub">Every feature maps to real SQL queries and Python logic — this is where the actual work lives.</p>
+  <div class="feat-grid">
+    <div class="fcard"><div class="fi">📋</div><div>
+      <h4>Report Card System</h4>
+      <p>Tracks 4 exam types — Weekly Test 1 &amp; 2, Half Yearly, and Final Exam — across 5 subjects (Physics, Chemistry, Math, English, CS). Calculates total, percentage, and auto-assigns grades A+ through F.</p>
+    </div></div>
+    <div class="fcard"><div class="fi">📈</div><div>
+      <h4>Progress Analytics</h4>
+      <p>Side-by-side bar charts built with Matplotlib showing a student's performance across all 4 exams per subject. Includes a dashed pass-mark line at 45% for quick visual reference.</p>
+    </div></div>
+    <div class="fcard"><div class="fi">💳</div><div>
+      <h4>Fee Management</h4>
+      <p>Quarterly fee tracking (Jan–Mar, Apr–Jun, Jul–Sep, Oct–Dec) at ₹7,500 per quarter. Supports marking payments, late-payment alerts, and full CRUD on fee records per student.</p>
+    </div></div>
+    <div class="fcard"><div class="fi">💰</div><div>
+      <h4>Salary Module</h4>
+      <p>Calculates net in-hand salary from basic pay + allowances − 8% tax − leave deductions. Admin can update allowances and leave count; net salary recalculates automatically.</p>
+    </div></div>
+    <div class="fcard"><div class="fi">📝</div><div>
+      <h4>Assignment Tracker</h4>
+      <p>Subject-wise assignment records with due date and submission status (Pending / Submitted). Teachers can add, update, or delete assignments; students view their list.</p>
+    </div></div>
+    <div class="fcard"><div class="fi">🔐</div><div>
+      <h4>Authentication &amp; CRUD</h4>
+      <p>Login validated against the MySQL users table. Full Create / Read / Update / Delete operations on every entity — students, teachers, marks, fees and salary — via raw SQL and mysql-connector-python.</p>
+    </div></div>
+  </div>
+</section>
+
+<!-- DATABASE -->
+<section id="database">
+  <div class="sec-label"><div class="ln"></div><span>Database Schema</span><div class="ln"></div></div>
+  <h2 class="sec-title">MySQL table structure</h2>
+  <p class="sec-sub">All data lives in a relational MySQL database. The original project uses raw SQL queries — no ORM, no abstraction layer.</p>
+  <div class="schema-grid">
+    <div class="tcard">
+      <div class="thead"><span>👤</span><span class="tn">users</span></div>
+      <div class="tfields">
+        <div class="fr"><span class="fn2">uid<span class="pk">PK</span></span><span class="ftype">VARCHAR(20)</span></div>
+        <div class="fr"><span class="fn2">password</span><span class="ftype">VARCHAR(50)</span></div>
+        <div class="fr"><span class="fn2">role</span><span class="ftype">ENUM</span></div>
+        <div class="fr"><span class="fn2">display_name</span><span class="ftype">VARCHAR(100)</span></div>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="thead"><span>🎓</span><span class="tn">students</span></div>
+      <div class="tfields">
+        <div class="fr"><span class="fn2">admin_no<span class="pk">PK</span></span><span class="ftype">VARCHAR(10)</span></div>
+        <div class="fr"><span class="fn2">name</span><span class="ftype">VARCHAR(100)</span></div>
+        <div class="fr"><span class="fn2">dob</span><span class="ftype">DATE</span></div>
+        <div class="fr"><span class="fn2">phone</span><span class="ftype">VARCHAR(15)</span></div>
+        <div class="fr"><span class="fn2">gender</span><span class="ftype">CHAR(1)</span></div>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="thead"><span>👩‍🏫</span><span class="tn">teachers</span></div>
+      <div class="tfields">
+        <div class="fr"><span class="fn2">tid<span class="pk">PK</span></span><span class="ftype">VARCHAR(10)</span></div>
+        <div class="fr"><span class="fn2">name</span><span class="ftype">VARCHAR(100)</span></div>
+        <div class="fr"><span class="fn2">doj</span><span class="ftype">DATE</span></div>
+        <div class="fr"><span class="fn2">phone</span><span class="ftype">VARCHAR(15)</span></div>
+        <div class="fr"><span class="fn2">subject</span><span class="ftype">VARCHAR(50)</span></div>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="thead"><span>📋</span><span class="tn">marks</span></div>
+      <div class="tfields">
+        <div class="fr"><span class="fn2">admin_no<span class="fk">FK</span></span><span class="ftype">VARCHAR(10)</span></div>
+        <div class="fr"><span class="fn2">exam_type</span><span class="ftype">ENUM</span></div>
+        <div class="fr"><span class="fn2">physics</span><span class="ftype">INT</span></div>
+        <div class="fr"><span class="fn2">chemistry</span><span class="ftype">INT</span></div>
+        <div class="fr"><span class="fn2">math</span><span class="ftype">INT</span></div>
+        <div class="fr"><span class="fn2">english</span><span class="ftype">INT</span></div>
+        <div class="fr"><span class="fn2">cs</span><span class="ftype">INT</span></div>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="thead"><span>💳</span><span class="tn">fees</span></div>
+      <div class="tfields">
+        <div class="fr"><span class="fn2">admin_no<span class="fk">FK</span></span><span class="ftype">VARCHAR(10)</span></div>
+        <div class="fr"><span class="fn2">total_amt</span><span class="ftype">INT</span></div>
+        <div class="fr"><span class="fn2">jan_mar</span><span class="ftype">ENUM</span></div>
+        <div class="fr"><span class="fn2">apr_jun</span><span class="ftype">ENUM</span></div>
+        <div class="fr"><span class="fn2">jul_sep</span><span class="ftype">ENUM</span></div>
+        <div class="fr"><span class="fn2">oct_dec</span><span class="ftype">ENUM</span></div>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="thead"><span>💰</span><span class="tn">salary</span></div>
+      <div class="tfields">
+        <div class="fr"><span class="fn2">tid<span class="fk">FK</span></span><span class="ftype">VARCHAR(10)</span></div>
+        <div class="fr"><span class="fn2">basic</span><span class="ftype">INT</span></div>
+        <div class="fr"><span class="fn2">allowances</span><span class="ftype">INT</span></div>
+        <div class="fr"><span class="fn2">tax</span><span class="ftype">INT (8%)</span></div>
+        <div class="fr"><span class="fn2">deductions</span><span class="ftype">INT</span></div>
+        <div class="fr"><span class="fn2">net_salary</span><span class="ftype">INT</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH + CREDS + LIMITS -->
+<section id="tech">
+  <div class="sec-label"><div class="ln"></div><span>Tech Stack</span><div class="ln"></div></div>
+  <h2 class="sec-title">Built with</h2>
+  <p class="sec-sub">The core project is Python + MySQL. Streamlit was added as a frontend layer on top of the existing logic.</p>
+  <div class="tech-row">
+    <div class="ti">
+      <h4>🐍 Backend — Python 3.6+</h4>
+      <p>All business logic written in Python. Database operations use <span class="tag">mysql-connector-python</span> to run raw SQL. Data manipulation with <span class="tag">pandas</span> DataFrames. Charts via <span class="tag">matplotlib</span> and <span class="tag">numpy</span>.</p>
+    </div>
+    <div class="ti">
+      <h4>🗃️ Database — MySQL</h4>
+      <p>Relational schema with 6 tables linked via foreign keys. All CRUD written as raw SQL — <span class="tag">INSERT</span> <span class="tag">SELECT</span> <span class="tag">UPDATE</span> <span class="tag">DELETE</span> — passed through <span class="tag">cursor.execute()</span>. No ORM used.</p>
+    </div>
+    <div class="ti">
+      <h4>🖥️ Frontend — Streamlit</h4>
+      <p>Wraps Python logic in a web UI. Uses <span class="tag">st.tabs</span> <span class="tag">st.columns</span> <span class="tag">st.dataframe</span> <span class="tag">st.pyplot</span>. Custom CSS injected via <span class="tag">st.markdown(unsafe_allow_html=True)</span> for the dark theme.</p>
+    </div>
+    <div class="ti">
+      <h4>🔐 Auth &amp; Session</h4>
+      <p>Login validated against MySQL <span class="tag">users</span> table. Role stored in <span class="tag">st.session_state</span> and used to route to the correct portal. Password update writes back to the database.</p>
+    </div>
+  </div>
+
+  <br/><br/>
+  <div class="sec-label"><div class="ln"></div><span>Demo Credentials</span><div class="ln"></div></div>
+  <div class="creds-grid">
+    <div class="cc">
+      <div class="role">Admin Portal</div><div class="icon">🛡️</div>
+      <div class="crow"><span class="k">User ID</span><span class="v">ab@dpsrkp.org</span></div>
+      <div class="crow"><span class="k">Password</span><span class="v">abc123</span></div>
+    </div>
+    <div class="cc">
+      <div class="role">Teacher Portal</div><div class="icon">👩‍🏫</div>
+      <div class="crow"><span class="k">User ID</span><span class="v">lp@dpsrkp.org</span></div>
+      <div class="crow"><span class="k">Password</span><span class="v">physics</span></div>
+    </div>
+    <div class="cc">
+      <div class="role">Student Portal</div><div class="icon">🎓</div>
+      <div class="crow"><span class="k">User ID</span><span class="v">mridul@dpsrkp.org</span></div>
+      <div class="crow"><span class="k">Password</span><span class="v">nani</span></div>
+    </div>
+  </div>
+
+  <br/><br/>
+  <div class="sec-label"><div class="ln"></div><span>Known Limitations</span><div class="ln"></div></div>
+  <div class="lim-list">
+    <div class="lim"><span class="lb">CLI</span><p>In the original Python CLI version, the password input is not masked — it was typed as plain text in the terminal.</p></div>
+    <div class="lim"><span class="lb">Demo</span><p>The Streamlit version uses in-memory Pandas demo data instead of a live MySQL connection, so changes reset on page reload.</p></div>
+    <div class="lim"><span class="lb">Scale</span><p>Designed for a single class (Class XII). Multi-class or multi-school support would require schema changes and additional role logic.</p></div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div style="font-weight:700;margin-bottom:.3rem">Online School Management System</div>
+    <div>Built by Mridul Sharma · Delhi Public School, R.K. Puram · Class XII 2023-24</div>
+  </div>
+  <div class="fl">
+    <a href="https://github.com/MridulSharma02/Online-School-Management-System" target="_blank">GitHub →</a>
+    <a href="#overview">Back to top ↑</a>
+  </div>
+</footer>
+
+</body>
+</html>
